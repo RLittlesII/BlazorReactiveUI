@@ -10,13 +10,21 @@ namespace BlazorReactiveUI.Client.ViewModels
     public class IndexViewModel : ReactiveObject
     {
         private readonly ObservableAsPropertyHelper<long> _foo;
+        private readonly ObservableAsPropertyHelper<long> _bar;
 
         public IndexViewModel()
         {
-            Observable.Interval(new TimeSpan(0, 0, 1))
-                .ToProperty(this, x => x.Foo, out _foo, 0);
+            _foo = Observable
+                .Interval(new TimeSpan(0, 0, 1))
+                .ToProperty(this, x => x.Foo, 0);
+
+            _bar = Observable
+                .Interval(new TimeSpan(0, 0, 3))
+                .ToProperty(this, x => x.Bar, 0);
         }
 
         public long Foo => _foo.Value;
+        
+        public long Bar => _bar.Value;
     }
 }
